@@ -196,7 +196,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Author
 
 **Evan Torrence**
-- Electrical and Computer Engineering, University of Southern California
+- Electrical and Computer Engineering 29', University of Southern California
 - [GitHub](https://github.com/etorrence)
 - [LinkedIn](https://www.linkedin.com/in/evantorrence/)
 - Email: etorrenc@usc.edu
