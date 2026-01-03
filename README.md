@@ -182,18 +182,18 @@ Potential improvements for v2.0:
 - [ ] Alert system for low SpO2 (buzzer/LED)
 - [ ] Signal quality indicator on display
 
-## 📖 References
+## References
 
 - [MAX30102 Datasheet](https://datasheets.maximintegrated.com/en/ds/MAX30102.pdf)
 - [Maxim Integrated Application Note: Pulse Oximeter Design](https://www.maximintegrated.com/en/design/technical-documents/app-notes/6/6845.html)
 - [Arduino Example Code](https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/max30102-sensor/) (adapted and optimized)
 - [Photoplethysmography Theory](https://en.wikipedia.org/wiki/Photoplethysmogram)
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👤 Author
+## Author
 
 **Evan Torrence**
 - Electrical and Computer Engineering, University of Southern California
@@ -201,7 +201,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [LinkedIn](https://www.linkedin.com/in/evantorrence/)
 - Email: etorrenc@usc.edu
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Maxim Integrated for the spo2_algorithm library
 - Arduino community for sensor libraries
@@ -209,5 +209,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Status:** ✅ Functional prototype - tested and validated  
+**Status:** Functional prototype - tested and validated  
 **Last Updated:** January 2026
