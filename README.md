@@ -129,7 +129,7 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 
 | Brightness | Result | Signal Range |
 |------------|--------|--------------|
-| 60 | Too high for dark skin | 200k-202k (near saturation) |
+| 60 | Too high | 200k-202k (near saturation) |
 | 55 | **Optimal** | 150k-190k (stable) |
 | 40 | Too low | <50k (weak signal) |
 
