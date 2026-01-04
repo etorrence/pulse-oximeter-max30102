@@ -134,7 +134,7 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 ## Testing & Validation
 
 ### Test Results:
-- **Accuracy**: Consistent readings of 99-100% SpO2 (healthy baseline)
+- **Accuracy**: Consistent readings of 97-100% SpO2 (healthy baseline)
 - **Stability**: Maintains accurate readings for 5+ minutes
 - **Universality**: Successfully tested on subjects with dark and light skin tones
 - **Response Time**: Initial reading in 4 seconds, updates every 1 second
