@@ -6,14 +6,17 @@ A real-time blood oxygen saturation (SpO2) monitoring system using the MAX30102 
 
 ## Overview
 
-This project implements a functional pulse oximeter that measures blood oxygen saturation levels using photoplethysmography (PPG). The device displays real-time SpO2 readings on an OLED screen and has been empirically calibrated to improve robustness across different users and skin tones while avoiding sensor saturation.
+This project implements a functional pulse oximeter that measures blood oxygen saturation levels using photoplethysmography (PPG). The device displays real-time SpO2 readings on an OLED screen and has been optimized for robustness across different users and skin tones.
+
+> **Educational Project Only:**  
+> This is a learning prototype and is **not intended for medical diagnosis or clinical use**. Always use FDA-approved medical devices for health monitoring.
 
 **Key Features:**
 - Real-time SpO2 measurement (updates every 1 second)
 - 128x64 OLED display with clear readings
 - Signal validation to ensure accurate measurements
 - Optimized LED brightness for universal usability
-- Calibrated for robustness across different users and skin tones
+- Tested across different users and skin tones
 
 
 ## Project Motivation
@@ -70,7 +73,7 @@ The device uses Maxim Integrated's proprietary algorithm for calculating SpO2 fr
 **Hardware Layer (MAX30102):**
 - Red LED (660nm) and IR LED (880nm) illuminate tissue
 - Photodetector measures light absorption
-- Configured for a 100 Hz sample rate with hardware averaging enabled (sampleAverage = 4) to reduce noise
+- Configured for 100 Hz sampling with 4x hardware averaging (sampleAverage = 4) to reduce noise
 
 **My Implementation:**
 1. Collect 100 samples (4 seconds) of red and IR data
@@ -135,8 +138,8 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 ## Testing & Validation
 
 ### Test Results:
-- **Observed performance**: Consistent SpO2 readings in the 97–100% range under stable conditions when compared qualitatively against a consumer pulse oximeter
-- **Stability**: Maintains accurate readings for 5+ minutes
+- **Readings**: Consistent SpO2 readings in the 97–100% range under stable conditions when compared qualitatively against a consumer pulse oximeter
+- **Stability**: Maintains consistent readings for 5+ minutes
 - **Universality**: Successfully tested on subjects with dark and light skin tones
 - **Response Time**: Initial reading in 4 seconds, updates every 1 second
 
@@ -164,8 +167,7 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 
 4. **Measure SpO2:**
    - Place finger on MAX30102 sensor
-   - Open the Arduino Serial Monitor (115200 baud) and press any key to start the measurement process.
-   - This behavior is intentional for debugging and can be removed to allow auto-start on power.
+   - Press any key in Serial Monitor to start measurement (this key-press requirement can be removed for auto-start)
    - Keep finger still for best results
    - Reading appears on OLED display when valid
 
@@ -179,9 +181,6 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 | Display shows "Reading..." | Signal too weak/strong | Adjust finger pressure |
 
 ## Technical Background
-
-> **Disclaimer:**  
-> This project is an educational prototype and is not intended for medical diagnosis or clinical use.
 
 ### How Pulse Oximetry Works:
 
