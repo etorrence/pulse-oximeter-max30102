@@ -148,13 +148,10 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 ## How to Use
 
 1. **Upload Code:**
-```
-   # Install required libraries in Arduino IDE:
-   # - Adafruit SSD1306
-   # - SparkFun MAX3010x
-   
-   # Open pulse_oximeter.ino and upload to Arduino Nano 33 BLE
-```
+   - Install required libraries in Arduino IDE:
+     - Adafruit SSD1306
+     - SparkFun MAX3010x
+   - Open `pulse_oximeter.ino` and upload to Arduino Nano 33 BLE Sense Rev2
 
 2. **Connect Hardware:**
    - Follow wiring diagram above
@@ -175,7 +172,7 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 | Issue | Possible Cause | Solution |
 |-------|----------------|----------|
 | "Sensor Error!" | Wiring problem | Check I2C connections (SDA/SCL) |
-| Random readings (40-89%) | Poor finger contact | Reposition finger, ensure firm contact |
+| Erratic readings or values below 90% | Poor finger contact | Reposition finger, ensure firm contact |
 | No display update | Invalid signal | Keep finger still, wait 4 seconds |
 | Display shows "Reading..." | Signal too weak/strong | Adjust finger pressure |
 
@@ -244,7 +241,7 @@ Potential improvements for v2.0:
 
 - [MAX30102 Datasheet](https://datasheets.maximintegrated.com/en/ds/MAX30102.pdf)
 - [Maxim Integrated Application Note: Pulse Oximeter Design](https://www.maximintegrated.com/en/design/technical-documents/app-notes/6/6845.html)
-- [Arduino Example Code](https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/max30102-sensor/) (adapted and optimized)
+- [Arduino Project Hub: Pulse Oximeter](https://projecthub.arduino.cc/fiona-/pulse-oximeter-1298d5) by Fiona - Base implementation adapted and optimized for this project
 - [Photoplethysmography Theory](https://en.wikipedia.org/wiki/Photoplethysmogram)
 
 ## License
