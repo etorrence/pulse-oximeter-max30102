@@ -34,7 +34,7 @@ As a freshman in Electrical and Computer Engineering at USC, I built this projec
 | Jumper Wires | Male-to-male | Connections |
 | USB Cable | Micro-USB | Power & programming |
 
-**Total Cost:** ~$25-30
+**Total Cost:** ~$90
 
 ## Wiring Diagram
 ```
@@ -65,11 +65,58 @@ SSD1306 OLED Display:
 The device uses Maxim Integrated's proprietary algorithm for calculating SpO2 from photoplethysmography signals. The algorithm analyzes the ratio of AC/DC components in red and infrared light absorption to determine oxygen saturation.
 
 **Signal Processing Pipeline:**
-1. Collect 100 samples over 4 seconds (25 samples/second effective rate)
-2. Extract AC (pulsatile) and DC (baseline) components
-3. Calculate ratio: R = (AC_red/DC_red) / (AC_ir/DC_ir)
-4. Convert to SpO2 percentage using calibration curve
-5. Validate signal quality before displaying
+
+**Hardware Layer (MAX30102):**
+- Red LED (660nm) and IR LED (880nm) illuminate tissue
+- Photodetector measures light absorption
+- 100 samples/second with 4x hardware averaging = 25 samples/second effective
+
+**My Implementation:**
+1. Collect 100 samples (4 seconds) of red and IR data
+2. Store in buffers: `redBuffer[100]` and `irBuffer[100]`
+3. Pass data to Maxim's algorithm library
+4. Receive calculated SpO2 value and validity flag
+5. Display result only when signal quality is confirmed (validSPO2 == 1)
+6. Update display every 1 second with sliding 100-sample window
+
+**Maxim Algorithm (Library - Black Box):**
+The `spo2_algorithm.h` library performs:
+- AC (pulsatile) and DC (baseline) component extraction
+- Ratio calculation: R = (AC_red/DC_red) / (AC_ir/DC_ir)
+- SpO2 conversion using proprietary calibration curve
+- Signal quality validation
+
+## My Implementation
+
+### What I Built:
+- **Hardware integration**: Connected MAX30102 sensor and OLED display via I2C communication
+- **Data acquisition system**: Implemented continuous sampling with 100-sample sliding window buffer
+- **Real-time display interface**: Created user-friendly OLED display showing current SpO2 readings
+- **System optimization**: Calibrated LED brightness (tested 40-60, optimized to 55) through empirical testing
+- **Signal validation logic**: Only display readings when algorithm confirms signal quality
+
+### What I Used from Libraries:
+- **Maxim's SpO2 algorithm** (`spo2_algorithm.h`): Industry-standard proprietary algorithm for converting raw light absorption data to SpO2 percentage
+- **MAX30105 driver** (`MAX30105.h`): Hardware interface library for sensor configuration and data retrieval
+- **SSD1306 driver** (`SSD1306Ascii.h`): OLED display control via I2C
+
+### Why I Used Existing Libraries:
+
+For this learning project focused on system integration, I chose to use Maxim's validated algorithm rather than implementing signal processing from scratch. This engineering decision allowed me to:
+
+- **Focus on system design**: Hardware integration, optimization, and user experience
+- **Ensure medical accuracy**: Leverage industry-standard, clinically-validated algorithms
+- **Learn key skills**: Embedded systems programming, I2C communication, real-time data processing
+- **Follow industry practice**: Real-world engineers build on proven libraries rather than reinventing complex algorithms
+
+This approach mirrors professional engineering where the value is in creating reliable, working systems by intelligently integrating existing solutions.
+
+### Key Design Decisions:
+
+1. **Removed heart rate display**: Heart rate calculation proved unreliable due to motion artifact sensitivity; focused solely on SpO2 for accuracy
+2. **LED brightness optimization**: Through testing across different skin tones, found brightness = 55 provides optimal signal strength without saturation
+3. **Validation-first display**: Only show readings when `validSPO2 == 1` to maintain user trust and data quality
+4. **Sliding window approach**: Continuous 100-sample buffer with 25-sample updates balances responsiveness with stability
 
 ## Optimization Process
 
@@ -83,11 +130,6 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 | 40 | Too low | <50k (weak signal) |
 
 **Final setting: 55** - Provides robust performance across different skin tones while avoiding sensor saturation.
-
-### Design Decisions:
-1. **Removed heart rate display**: Motion artifacts made HR readings unreliable; focused on SpO2 accuracy
-2. **Validation logic**: Only displays readings when `validSPO2 == 1` to ensure data quality
-3. **Sliding window**: Uses 100-sample buffer with 25-sample updates for smooth, responsive measurements
 
 ## Testing & Validation
 
@@ -106,7 +148,7 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 ## How to Use
 
 1. **Upload Code:**
-```bash
+```
    # Install required libraries in Arduino IDE:
    # - Adafruit SSD1306
    # - SparkFun MAX3010x
@@ -139,39 +181,55 @@ Through empirical testing, I optimized the LED brightness for reliable readings:
 
 ## Technical Background
 
-### Photoplethysmography (PPG):
-Pulse oximetry works by shining red (660nm) and infrared (880nm) light through tissue and measuring absorption. Oxygenated hemoglobin (HbO2) and deoxygenated hemoglobin (Hb) absorb these wavelengths differently:
+### How Pulse Oximetry Works:
 
-- **Red light**: More absorbed by Hb (deoxygenated blood)
-- **IR light**: More absorbed by HbO2 (oxygenated blood)
+**Physical Principle:**
+Pulse oximetry uses photoplethysmography (PPG) to measure blood oxygen saturation. The MAX30102 sensor emits red (660nm) and infrared (880nm) light through tissue:
 
-The ratio of absorption at these wavelengths indicates oxygen saturation percentage.
+- **Red light**: More absorbed by deoxygenated hemoglobin (Hb)
+- **IR light**: More absorbed by oxygenated hemoglobin (HbO2)
 
-### Why SpO2 is Stable but Heart Rate Isn't:
-- **SpO2 calculation**: Based on ratios of signal components - relatively immune to motion
-- **Heart rate calculation**: Requires precise peak detection - highly sensitive to artifacts
+**Signal Components:**
+- **DC component**: Constant absorption by tissue, bone, and non-pulsatile blood
+- **AC component**: Pulsatile absorption from arterial blood with each heartbeat
+
+**SpO2 Calculation (performed by library):**
+```
+R = (AC_red / DC_red) / (AC_ir / DC_ir)
+SpO2 ≈ f(R)  // Proprietary calibration curve
+```
+
+**My Role:** I collect the raw red and IR sensor data, then pass it to Maxim's algorithm which performs the AC/DC extraction and calibration.
 
 ## What I Learned
 
 ### Technical Skills:
-- Embedded C programming for Arduino
-- I2C communication protocol implementation
-- Real-time signal processing and filtering
-- Hardware debugging (oscilloscope, multimeter)
-- Biomedical sensor integration
+- **Embedded programming**: Arduino C, real-time data acquisition
+- **I2C communication**: Interfacing with multiple devices on same bus
+- **Signal characteristics**: Understanding PPG waveforms, saturation, and noise
+- **Hardware debugging**: Using Serial Monitor to diagnose sensor issues
+- **System integration**: Combining sensor, processor, and display into working device
 
 ### Engineering Process:
-- Iterative testing and optimization (LED brightness calibration)
-- Design trade-offs (accuracy vs. complexity)
-- User experience considerations (display feedback, validation)
-- Documentation and version control (Git/GitHub)
+- **Library selection**: When to use existing solutions vs. build from scratch
+- **Empirical testing**: LED brightness optimization through systematic testing
+- **Trade-off analysis**: Accuracy (using validated algorithm) vs. learning (implementing from scratch)
+- **Design decisions**: Removed heart rate due to motion sensitivity, focused on SpO2
+- **Validation methodology**: Testing across different users and conditions
 
 ### Problem-Solving:
-- Diagnosed and fixed LED saturation issues
-- Optimized settings for different use cases
-- Balanced signal quality with universal usability
+- Diagnosed LED saturation issue (262,143 readings)
+- Optimized brightness for different skin tones (settled on 55)
+- Implemented proper validation before display
+- Learned why SpO2 is stable while heart rate isn't (ratio vs. peak detection)
 
-## 🔮 Future Enhancements
+### Professional Development:
+- **Documentation**: Creating clear technical documentation
+- **Version control**: Using Git/GitHub for project management
+- **Communication**: Explaining technical concepts clearly
+- **Engineering judgment**: Knowing when to leverage existing tools
+
+## Future Enhancements
 
 Potential improvements for v2.0:
 - [ ] Data logging to SD card or cloud
@@ -196,7 +254,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Author
 
 **Evan Torrence**
-- Electrical and Computer Engineering 29', University of Southern California
+- Electrical and Computer Engineering '29, University of Southern California
 - [GitHub](https://github.com/etorrence)
 - [LinkedIn](https://www.linkedin.com/in/evantorrence/)
 - Email: etorrenc@usc.edu
