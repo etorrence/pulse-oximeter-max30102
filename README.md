@@ -2,7 +2,7 @@
 
 A real-time blood oxygen saturation (SpO2) monitoring system using the MAX30102 sensor and Arduino Nano 33 BLE Sense Rev2.
 
-![Device in use](images/demo_device.jpg)
+![Device in use](images/device_demo.jpg)
 
 ## Overview
 
