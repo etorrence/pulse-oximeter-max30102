@@ -34,7 +34,7 @@ As a freshman in Electrical and Computer Engineering at USC, I built this projec
 | Jumper Wires | Male-to-male | Connections |
 | USB Cable | Micro-USB | Power & programming |
 
-**Total Cost:** ~$90
+**Total Cost:** ~$60-70
 
 ## Wiring Diagram
 ```
