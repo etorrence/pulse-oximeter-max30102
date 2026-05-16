@@ -1,0 +1,62 @@
+# Arduino compiled files
+*.hex
+*.elf
+*.bin
+*.map
+
+# Build directories
+build/
+*.build/
+
+# Arduino IDE
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Platform IO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE specific
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Library files (optional - uncomment if not sharing libraries)
+# libraries/
