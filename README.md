@@ -73,7 +73,7 @@ The dashboard currently displays:
 
 # OLED Waveform Visualization
 
-![OLED Waveform](images/oled_waveform.jpeg)
+![OLED Waveform](images/oled_waveform.jpg)
 
 The OLED display evolved from a static text-based SpO₂ display into a continuously updating waveform monitor.
 
@@ -377,15 +377,16 @@ Planned features include:
 
 ```text
 src/
-├── pulse_oximeter.ino
+└── pulse_oximeter/
+    └── pulse_oximeter.ino
 
 images/
 ├── device_demo.jpg
-├── oled_waveform.jpeg
+├── oled_waveform.jpg
 ├── dashboard_screenshot.png
 ├── wiring_diagram.png
 
-dashboard_bridge/
+pulse_ox_dashboard/
 ├── pulse_ox_bridge.py
 
 docs/
