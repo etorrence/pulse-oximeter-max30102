@@ -2,17 +2,17 @@
 
 ```text
 [ Finger / Tissue ]
-        →
+        ↓
 [ MAX30102 Sensor ]
-        →
+        ↓
 [ Arduino Nano 33 BLE Sense Rev2 ]
-        →
+        ↓
 [ SpO₂ Computation + Waveform Buffering ]
-        →
+        ↓
 [ OLED Display + BLE Telemetry ]
-        →
+        ↓
 [ Python Bridge (Bleak) ]
-        →
+        ↓
 [ Flask Web Dashboard ]
 ```
 
